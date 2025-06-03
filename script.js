@@ -4,31 +4,25 @@ function addTask() {
   if (taskText === "") return;
 
   const li = document.createElement("li");
-  li.textContent = taskText;
 
-  li.onclick = () => li.classList.toggle("completed");
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
+  checkbox.onclick = () => li.classList.toggle("completed");
 
-  const doneBtn = document.createElement("button");
-  doneBtn.textContent = "Done ✅";
-  doneBtn.className = "done-button";
-  doneBtn.onclick = (e) => {
-    e.stopPropagation();
-    li.remove();
-    checkIfEmpty();
-  };
+  const span = document.createElement("span");
+  span.textContent = taskText;
+  span.className = "task-name";
 
-  li.appendChild(doneBtn);
+  const delBtn = document.createElement("button");
+  delBtn.innerHTML = "🗑️";
+  delBtn.className = "delete-button";
+  delBtn.onclick = () => li.remove();
+
+  li.appendChild(checkbox);
+  li.appendChild(span);
+  li.appendChild(delBtn);
+
   document.getElementById("taskList").appendChild(li);
   input.value = "";
   input.focus();
-  checkIfEmpty();
 }
-
-function checkIfEmpty() {
-  const taskList = document.getElementById("taskList");
-  const message = document.getElementById("emptyMessage");
-  message.style.display = taskList.children.length === 0 ? "block" : "none";
-}
-
-
-checkIfEmpty();
